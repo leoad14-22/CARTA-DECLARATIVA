@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carta para Micaelli e Elisa</title>
+  <style>
+    /* Reset e configurações básicas */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #323641;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Container principal da carta */
+    .letter-image {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      cursor: pointer;
+      /* Escala baseada no tamanho da viewport */
+      transform: scale(1);
+      transition: transform 0.3s ease;
+    }
+
+    /* Animação da carta */
+    .animated-mail {
+      position: absolute;
+      height: 225px;
+      width: 300px;
+      transition: .4s;
+    }
+
+    /* Corpo principal da carta (envelope) */
+    .body {
+      position: absolute;
+      bottom: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 0 150px 300px;
+      border-color: transparent transparent #e95f55 transparent;
+      z-index: 2;
+    }
+
+    /* Aba superior do envelope */
+    .top-fold {
+      position: absolute;
+      top: 75px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 75px 150px 0 150px;
+      transform-origin: 50% 0%;
+      transition: transform .4s .4s, z-index .2s .4s;
+      border-color: #cf4a43 transparent transparent transparent;
+      z-index: 2;
+    }
+
+    /* Parte traseira do envelope */
+    .back-fold {
+      position: absolute;
+      bottom: 0;
+      width: 300px;
+      height: 150px;
+      background: #cf4a43;
+      z-index: 0;
+    }
+
+    /* Aba esquerda do envelope */
+    .left-fold {
+      position: absolute;
+      bottom: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 75px 0 75px 150px;
+      border-color: transparent transparent transparent #e15349;
+      z-index: 2;
+    }
+
+    /* Conteúdo da carta */
+    .letter {
+      left: 30px;
+      bottom: 0px;
+      position: absolute;
+      width: 240px;
+      height: 90px;
+      background: white;
+      z-index: 1;
+      overflow: hidden;
+      transition: .4s .2s;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Borda decorativa da carta */
+    .letter-border {
+      height: 15px;
+      width: 100%;
+      background: repeating-linear-gradient(
+        -45deg,
+        #cb5a5e,
+        black 10px,
+        transparent 10px,
+        transparent 20px
+      );
+    }
+
+    /* Título da carta */
+    .letter-title {
+      margin: 15px;
+      font-weight: bold;
+      font-size: 16px;
+      color: #000;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Conteúdo do texto da carta */
+    .letter-context {
+      margin: 15px;
+      height: auto;
+      width: auto;
+      font-size: 20px;
+      color: #333;
+      font-family: Arial, sans-serif;
+      line-height: 0.9em;
+    }
+
+    .letter-context p {
+      margin: 25px 0;
+    }
+
+    /* Selo da carta */
+    .letter-stamp {
+      margin-top: 15px;
+      margin-left: 180px;
+      border-radius: 100%;
+      height: 40px;
+      width: 40px;
+      opacity: 0.3;
+      background: #e95f55;
+    }
+
+    /* Sombra da carta */
+    .shadow {
+      position: absolute;
+      top: 300px;
+      left: 50%;
+      width: 500px;
+      height: 40px;
+      transform: translateX(-50%);
+      border-radius: 100%;
+      background: radial-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.0), rgba(0,0,0,0.0));
+      transition: .4s;
+    }
+
+    /* Efeitos de hover/interação */
+    .letter-image:hover .animated-mail {
+      transform: translateY(75px);
+    }
+
+    .letter-image:hover .animated-mail .top-fold {
+      transition: transform .4s, z-index .2s;
+      transform: rotateX(180deg);
+      z-index: 0;
+    }
+
+    .letter-image:hover .animated-mail .letter {
+      height: 530px;
+    }
+
+    .letter-image:hover .shadow {
+      width: 350px;
+    }
+
+    /* Responsividade para tablets */
+    @media screen and (max-width: 768px) {
+      .letter-image {
+        transform: scale(0.8);
+      }
+      
+      .letter-title {
+        font-size: 14px;
+      }
+      
+      .letter-context {
+        font-size: 11px;
+      }
+    }
+
+    /* Responsividade para celulares */
+    @media screen and (max-width: 480px) {
+      body {
+        padding: 20px;
+      }
+      
+      .letter-image {
+        transform: scale(0.7);
+      }
+      
+      .letter-title {
+        font-size: 13px;
+        margin: 12px;
+      }
+      
+      .letter-context {
+        font-size: 10px;
+        margin: 12px;
+        line-height: 1.3em;
+      }
+      
+      .letter-stamp {
+        margin-left: 160px;
+        height: 35px;
+        width: 35px;
+      }
+    }
+
+    /* Responsividade para celulares muito pequenos */
+    @media screen and (max-width: 320px) {
+      .letter-image {
+        transform: scale(0.6);
+      }
+      
+      .letter-title {
+        font-size: 12px;
+        margin: 10px;
+      }
+      
+      .letter-context {
+        font-size: 9px;
+        margin: 10px;
+      }
+      
+      .letter-stamp {
+        margin-left: 140px;
+        height: 30px;
+        width: 30px;
+      }
+    }
+
+    /* Responsividade para telas grandes */
+    @media screen and (min-width: 1200px) {
+      .letter-image {
+        transform: scale(1.2);
+      }
+      
+      .letter-title {
+        font-size: 18px;
+      }
+      
+      .letter-context {
+        font-size: 14px;
+      }
+    }
+
+    /* Suporte para dispositivos com touch */
+    @media (hover: none) and (pointer: coarse) {
+      .letter-image {
+        /* Para dispositivos touch, ativa a animação com tap */
+        transition: transform 0.9s ease;
+      }
+      
+      .letter-image:active .animated-mail {
+        transform: translateY(75px);
+      }
+
+      .letter-image:active .animated-mail .top-fold {
+        transition: transform .4s, z-index .2s;
+        transform: rotateX(180deg);
+        z-index: 0;
+      }
+
+      .letter-image:active .animated-mail .letter {
+        height: 450px;
+      }
+
+      .letter-image:active .shadow {
+        width: 350px;
+      }
+    }
+
+    /* Modo paisagem em dispositivos móveis */
+    @media screen and (max-width: 768px) and (orientation: landscape) {
+      .letter-image {
+        transform: scale(0.7);
+      }
+    }
+
+    /* Acessibilidade - redução de movimento */
+    @media (prefers-reduced-motion: reduce) {
+      .animated-mail,
+      .top-fold,
+      .letter,
+      .shadow,
+      .letter-image {
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Container principal da carta animada -->
+  <div class="letter-image" role="button" tabindex="0" aria-label="Clique para abrir a carta de amor">
+    <div class="animated-mail">
+      <!-- Parte traseira do envelope -->
+      <div class="back-fold"></div>
+      
+      <!-- Conteúdo da carta -->
+      <div class="letter">
+        <!-- Borda decorativa -->
+        <div class="letter-border"></div>
+        
+        <!-- Título da carta -->
+        <div class="letter-title">Para Micaelli e Elisa 💖</div>
+        
+        <!-- Conteúdo principal da mensagem -->
+        <div class="letter-context">
+          <p>Queridas Micaelli Maria do Nascimento Dionísio e Elisa Maria,</p>
+          <p>Vocês são o maior presente que a vida me deu. Cada sorriso, cada abraço, cada momento ao lado de vocês é uma bênção.</p>
+          <p>Amo vocês com todo o meu coração. Para sempre, com amor.</p>
+          <p style="text-align: right;">💌 Seu amor</p>
+        </div>
+        
+        <!-- Selo decorativo -->
+        <div class="letter-stamp">
+          <div class="letter-stamp-inner"></div>
+        </div>
+      </div>
+      
+      <!-- Elementos do envelope -->
+      <div class="top-fold"></div>
+      <div class="body"></div>
+      <div class="left-fold"></div>
+    </div>
+    
+    <!-- Sombra da carta -->
+    <div class="shadow"></div>
+  </div>
+</body>
+</html>
